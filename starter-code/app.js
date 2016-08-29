@@ -15,12 +15,12 @@ app.config(function($routeProvider, $locationProvider){
         .when('/wines/:id', { // the "id" parameter 
           templateUrl: 'templates/wines-show.html',
           controller: 'WinesShowCtrl'
-        })
+        });
         $locationProvider.html5Mode({
               enabled: true,
               requireBase: false
             });
-    })
+    });
 
 
 /////////////////
@@ -31,12 +31,12 @@ app.config(function($routeProvider, $locationProvider){
       console.log("Wine Index");
       $scope.hello = "wine index controller is working!";
       $scope.wines = WineService.query();
-    })
+    });
 
 app.controller('WinesShowCtrl',function($scope, WineService, $routeParams){
-  console.log("Wine Show")
+  console.log("Wine Show");
   $scope.wines = WineService.get($routeParams.id);
-})
+});
 
 ////////////
 // MODELS //
@@ -48,18 +48,18 @@ app.factory('WineService', function(){
 
   WineService.query = function(){
     return ALL_WINES;
-  }
+  };
 
   WineService.get = function(id){
     var id = parseInt(id);
     return ALL_WINES.find(function(wine){
       return wine.id == id;
     });
-  }
+  };
 
   return WineService;
 
-})
+});
 
 
 
