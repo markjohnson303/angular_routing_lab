@@ -27,16 +27,29 @@ app.config(function($routeProvider, $locationProvider){
 // CONTROLLERS //
 /////////////////
 
- app.controller('WinesIndexCtrl', function($scope, WineService, $routeParams){
-      console.log("Wine Index");
-      $scope.hello = "wine index controller is working!";
-      $scope.wines = WineService.query();
-    });
+ app.controller('WinesIndexCtrl',function($scope, WineService, $routeParams, $http){ 
+   console.log("Wine Index");
+     $http.get('http://daretoexplore.herokuapp.com/wines')
+     .then(function(response, err) {
+         if(err){
+             console.log('error: ', err);
+         }
+     $scope.wines = response.data;
+   });
+ });
 
-app.controller('WinesShowCtrl',function($scope, WineService, $routeParams){
-  console.log("Wine Show");
-  $scope.wines = WineService.get($routeParams.id);
+
+app.controller('WinesShowCtrl', function($scope, WineService, $routeParams, $http){
+    var wineID = ($routeParams.id);
+    $http.get('http://daretoexplore.herokuapp.com/wines/' +  wineID)
+        .then(function(response, err){
+        $scope.wine = response.data;
+  });
 });
+
+
+
+
 
 ////////////
 // MODELS //
